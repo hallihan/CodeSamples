@@ -19,7 +19,7 @@
                 $curlHeaders[] = 'secret: '.getenv('MSI_SECRET'); // Add MSI_SECRET to Headers
             } else {
                 $msiEndpoint = 'http://169.254.169.254/metadata/identity/oauth2/token';
-                $msiApiVersion = '2019-04-30';
+                $msiApiVersion = '2018-02-01';
             }
             $msiUri = $msiEndpoint."?api-version=$msiApiVersion&resource=https%3A%2F%2Fvault.azure.net";
         ?>
@@ -52,8 +52,8 @@
             //   "pguser":"padmin@yourdbservername",
             //   "pgpassword":"REDACTED"}
             
-            $kvName = getenv('KV_NAME') ?? 'mykeyvaultname';
-            $configSecretName = getenv('KV_SECRETNAME') ?? 'myconfigsecretname';
+            $kvName = getenv('KV_NAME') ? getenv('KV_NAME') : 'mykeyvaultname';
+            $configSecretName = getenv('KV_SECRETNAME') ? getenv('KV_SECRETNAME') : 'myconfigsecretname';
             $kvEndpoint = "https://$kvName.vault.azure.net/secrets/$configSecretName/?api-version=7.0";
         ?>
 
