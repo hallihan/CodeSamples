@@ -15,7 +15,7 @@ This is a simple sample PHP page that demonstrates the following:
             "pgdbname":"postgres",
             "pguser":"padmin@yourdbservername",
             "pgpassword":"REDACTED"}```
-5. Edit the index.php assignments for [$kvName](index.php#55) and [$configSecretName](index.php#56) or modify your hosting setup to populate environment variables KV_NAME and KV_SECRETNAME.  
+5. Edit the index.php assignments for [$kvName](index.php#L55) and [$configSecretName](index.php#L56) or modify your hosting setup to populate environment variables KV_NAME and KV_SECRETNAME.  
     - $kvName or KV_NAME should be the name of your KeyVault (do not include ".vault.azure.net").  
     - $configSecretName or KV_SECRETNAME should be the name of the secret where your Postgres config blob is stored.
 6. Deploy index.php, then navigate to your hosting endpoint.
