@@ -52,8 +52,8 @@
             //   "pguser":"padmin@yourdbservername",
             //   "pgpassword":"REDACTED"}
             
-            $kvName = getenv('KV_NAME') ? getenv('KV_NAME') : 'mykeyvaultname';
-            $configSecretName = getenv('KV_SECRETNAME') ? getenv('KV_SECRETNAME') : 'myconfigsecretname';
+            $kvName = getenv("KV_NAME") !== false ? getenv('KV_NAME') : 'mykeyvaultname';
+            $configSecretName = getenv('KV_SECRETNAME') !== false ? getenv('KV_SECRETNAME') : 'myconfigsecretname';
             $kvEndpoint = "https://$kvName.vault.azure.net/secrets/$configSecretName/?api-version=7.0";
         ?>
 
@@ -61,6 +61,7 @@
         <br/>
         
         <?php
+            // Use Managed Identiy bearer token to retrieve config blob from KeyVault
             $cUrl = curl_init($kvEndpoint);
             curl_setopt($cUrl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($cUrl, CURLOPT_HTTPHEADER, array(
@@ -69,8 +70,8 @@
             ));
             $response =  curl_exec($cUrl);
             curl_close($cUrl);
-            $parsed = json_decode($response);
-            $parsedValue = json_decode($parsed->value);
+            $parsed = json_decode($response); // Parse KeyVault response
+            $parsedValue = json_decode($parsed->value); // Parse config blob
         ?>
 
         <div> PGServer: <?= $parsedValue->pgserver ?> </div>
@@ -90,14 +91,15 @@
         <br/>
         <div> Results:</div>
         <?php
+            // Connect to database and run query
             $dbConn = pg_connect($connString);
             $dbResult = pg_query($dbConn, $query);
             $i=0;
+            // Output first field of each row returned
             while ($row = pg_fetch_row($dbResult)) {
                 echo "Database[$i]: $row[0]<br/>";
                 $i++;
             }
-
         ?> 
     </body>
 </html>
