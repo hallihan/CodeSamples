@@ -13,7 +13,7 @@
             );
 
             // Get MSI Endpoint from Environment for App Service or use default for VM
-            if (getenv("MSI_ENDPOINT") !== false) {
+            if (getenv('MSI_ENDPOINT') !== false) {
                 $msiEndpoint = getenv('MSI_ENDPOINT');
                 $msiApiVersion = '2017-09-01';
                 $curlHeaders[] = 'secret: '.getenv('MSI_SECRET'); // Add MSI_SECRET to Headers
@@ -52,7 +52,7 @@
             //   "pguser":"padmin@yourdbservername",
             //   "pgpassword":"REDACTED"}
             
-            $kvName = getenv("KV_NAME") !== false ? getenv('KV_NAME') : 'mykeyvaultname';
+            $kvName = getenv('KV_NAME') !== false ? getenv('KV_NAME') : 'mykeyvaultname';
             $configSecretName = getenv('KV_SECRETNAME') !== false ? getenv('KV_SECRETNAME') : 'myconfigsecretname';
             $kvEndpoint = "https://$kvName.vault.azure.net/secrets/$configSecretName/?api-version=7.0";
         ?>
@@ -85,7 +85,7 @@
             $connString = 'host='.$parsedValue->pgserver.' port=5432 dbname='.$parsedValue->pgdbname.' user='.$parsedValue->pguser.' password='.$parsedValue->pgpassword.' sslmode=require';
             $query = 'SELECT datname FROM pg_database;';
         ?>
-        <div> ConnectionString: <?= str_replace($parsedValue->pgpassword,"REDACTED",$connString) ?> </div>
+        <div> ConnectionString: <?= str_replace($parsedValue->pgpassword,'REDACTED',$connString) ?> </div>
 
         <div> Running query: <?= $query ?> </div>
         <br/>
